@@ -5,10 +5,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    background-color: #fff;
 }
 
 .inner-container {
-    width:730rpx;
+    width: 730rpx;
     height: 300rpx;
     border: 1px dashed #DcEBE6;
 }
@@ -24,7 +25,8 @@
     width: 60rpx;
     height: 60rpx;
 }
-.text{
+
+.text {
     margin-top: 6rpx;
     font-size: 24rpx;
     color: #333333;
