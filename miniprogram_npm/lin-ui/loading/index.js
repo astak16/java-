@@ -1,7 +1,7 @@
-import computeOffset from '../behaviors/computeOffset';
+import computeOffset from "../behaviors/computeOffset";
 Component({
   behaviors: [computeOffset],
-  externalClasses: ['l-container-class', 'l-class'],
+  externalClasses: ["l-container-class", "l-class"],
   options: {
     multipleSlots: true
   },
@@ -11,32 +11,32 @@ Component({
       type: Boolean,
       value: false
     },
-    opacity:{
+    opacity: {
       type: String,
-      value: '1'
+      value: "1"
     },
     bgColor: {
       type: String,
-      value: '#fff'
+      value: "#fff"
     },
-    zIndex:{
+    zIndex: {
       type: Number,
       value: 776
     },
     // 类型
     type: {
       type: String,
-      value: 'rotate'
+      value: "rotate"
     },
     // 动画颜色
     color: {
       type: String,
-      value: ''
+      value: ""
     },
     // loading 动画大小
     size: {
       type: String,
-      value: 'medium',
+      value: "medium"
     },
     // 自定义
     custom: Boolean,
@@ -51,20 +51,20 @@ Component({
   pageLifetimes: {
     show() {
       this._init();
-    },
+    }
   },
 
   methods: {
     _init() {
       wx.lin = wx.lin || {};
-      wx.lin.showLoading = (options) => {
+      wx.lin.showLoading = options => {
         const {
           custom = false,
           fullScreen = false,
-          color = '',
-          type = 'rotate',
-          size = 'medium',
-          opacity = '1'
+          color = "",
+          type = "rotate",
+          size = "medium",
+          opacity = "1"
         } = { ...options };
         this.setData({
           custom,
@@ -85,6 +85,6 @@ Component({
     // 阻止滑动
     doNothingMove() {
       // do nothing……
-    },
+    }
   }
 });

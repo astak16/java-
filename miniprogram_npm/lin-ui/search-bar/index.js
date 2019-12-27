@@ -4,12 +4,12 @@ Component({
    * 组件的属性列表
    */
   externalClasses: [
-    'l-class',
-    'l-container-class',
-    'l-placeholder-class',
-    'l-icon-class',
-    'l-input-class',
-    'l-cancel-class'
+    "l-class",
+    "l-container-class",
+    "l-placeholder-class",
+    "l-icon-class",
+    "l-input-class",
+    "l-cancel-class"
   ],
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
@@ -17,12 +17,12 @@ Component({
   properties: {
     confirmType: {
       type: String,
-      value: 'search'
+      value: "search"
     },
     placeholder: String,
     cancelText: {
       type: String,
-      value: '取消'
+      value: "取消"
     },
     address: String,
     custom: Boolean,
@@ -30,19 +30,19 @@ Component({
     type: String,
     icon: {
       type: String,
-      value: 'research'
+      value: "research"
     },
     iconColor: {
       type: String,
-      value: '#bdbdbd'
+      value: "#bdbdbd"
     },
     iconSize: {
       type: String,
-      value: '28'
+      value: "28"
     },
     bgColor: {
       type: String,
-      value: '#f3f3f3'
+      value: "#f3f3f3"
     },
     showCancel: {
       type: Boolean,
@@ -50,11 +50,11 @@ Component({
     },
     shape: {
       type: String,
-      value: 'primary'
+      value: "primary"
     },
     TextAlign: {
       type: String,
-      value: 'left'
+      value: "left"
     },
     adress: String,
     // 获取焦点
@@ -74,74 +74,68 @@ Component({
       type: Boolean,
       value: false
     },
-    // 占位文字的样式  
+    // 占位文字的样式
     placeholderStyle: {
       type: String,
-      value: ''
+      value: ""
     }
   },
 
   /**
    * 组件的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   /**
    * 组件的方法列表
    */
   methods: {
     onCancel() {
-      this.triggerEvent('lincancel', {}, {
-        bubbles: true,
-        composed: true
-      });
+      this.triggerEvent(
+        "lincancel",
+        {},
+        {
+          bubbles: true,
+          composed: true
+        }
+      );
     },
     // input属性列表
     handleInputChange(event) {
-      const {
-        detail = {}
-      } = event;
-      const {
-        value = ''
-      } = detail;
+      const { detail = {} } = event;
+      const { value = "" } = detail;
 
       this.setData({
         value
       });
 
-      this.triggerEvent('linchange', detail);
+      this.triggerEvent("linchange", detail);
     },
 
     handleInputFocus(event) {
-      this.triggerEvent('linfocus', event.detail);
+      this.triggerEvent("linfocus", event.detail);
     },
 
     handleInputBlur(event) {
-      this.triggerEvent('linblur', event.detail);
+      this.triggerEvent("linblur", event.detail);
     },
 
     handleInputConfirm(event) {
-      const {
-        detail = {}
-      } = event;
-      const {
-        value = ''
-      } = detail;
+      const { detail = {} } = event;
+      const { value = "" } = detail;
 
       this.setData({
         value
       });
 
-      this.triggerEvent('linconfirm', detail);
+      this.triggerEvent("linconfirm", detail);
     },
 
     onClearTap(event) {
       this.setData({
-        value: ''
+        value: ""
       });
-      this.triggerEvent('linclear', event.detail, {
+      this.triggerEvent("linclear", event.detail, {
         bubbles: true,
         composed: true
       });

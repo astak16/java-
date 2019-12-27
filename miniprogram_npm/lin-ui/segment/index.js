@@ -1,35 +1,35 @@
-import scrollCenter from '../behaviors/scrollCenter';
+import scrollCenter from "../behaviors/scrollCenter";
 
 Component({
   /**
-     * 组件的属性列表
-     */
+   * 组件的属性列表
+   */
   behaviors: [scrollCenter],
   externalClasses: [
-    'l-class',
-    'l-header-class',
-    'l-class-active',
-    'l-active-class',
-    'l-class-inactive',
-    'l-inactive-class',
-    'l-class-tabimage',
-    'l-tab-image-class',
-    'l-class-header-line',
-    'l-header-line-class',
-    'l-class-line',
-    'l-line-class',
-    'l-class-icon',
-    'l-icon-class',
-    'l-class-badge',
-    'l-badge-class'
+    "l-class",
+    "l-header-class",
+    "l-class-active",
+    "l-active-class",
+    "l-class-inactive",
+    "l-inactive-class",
+    "l-class-tabimage",
+    "l-tab-image-class",
+    "l-class-header-line",
+    "l-header-line-class",
+    "l-class-line",
+    "l-line-class",
+    "l-class-icon",
+    "l-icon-class",
+    "l-class-badge",
+    "l-badge-class"
   ],
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
   },
 
   relations: {
-    '../segment-item/index': {
-      type: 'child',
+    "../segment-item/index": {
+      type: "child",
       linked() {
         // 每次有子节点被插入时执行，target是该节点实例对象，触发在该节点attached生命周期之后
         this.initTabs();
@@ -37,17 +37,17 @@ Component({
       unlinked() {
         this.initTabs();
       }
-    },
+    }
   },
   properties: {
     activeKey: {
       type: String,
-      value: '',
-      observer: 'changeCurrent'
+      value: "",
+      observer: "changeCurrent"
     },
     placement: {
       type: String,
-      value: 'top',
+      value: "top"
     },
     scrollable: Boolean,
     hasLine: {
@@ -56,10 +56,10 @@ Component({
     },
     animatedForLine: Boolean,
     activeColor: {
-      type: String,
+      type: String
     },
     inactiveColor: {
-      type: String,
+      type: String
     },
     equalWidth: {
       type: Boolean,
@@ -76,19 +76,19 @@ Component({
   },
 
   /**
-     * 组件的初始数据
-     */
+   * 组件的初始数据
+   */
   data: {
     tabList: [],
     currentIndex: 0
   },
 
   /**
-     * 组件的方法列表
-     */
+   * 组件的方法列表
+   */
   methods: {
     initTabs(val = this.data.activeKey) {
-      let items = this.getRelationNodes('../segment-item/index');
+      let items = this.getRelationNodes("../segment-item/index");
       if (items.length > 0) {
         if (items.length === this.data.tabList.length) return;
         let activeKey = val,
@@ -100,15 +100,18 @@ Component({
             ...item.data
           };
         });
-        this.setData({
-          tabList: tab,
-          activeKey,
-          currentIndex,
-        }, () => {
-          if (this.data.scrollable) {
-            this.queryMultipleNodes();
+        this.setData(
+          {
+            tabList: tab,
+            activeKey,
+            currentIndex
+          },
+          () => {
+            if (this.data.scrollable) {
+              this.queryMultipleNodes();
+            }
           }
-        });
+        );
       }
     },
 
@@ -121,19 +124,19 @@ Component({
       });
     },
 
-    _setChangeData({
-      activeKey,
-      currentIndex
-    }) {
-      this.setData({
-        activeKey,
-        currentIndex
-      }, () => {
-        if (this.data.scrollable) {
-          this.queryMultipleNodes();
+    _setChangeData({ activeKey, currentIndex }) {
+      this.setData(
+        {
+          activeKey,
+          currentIndex
+        },
+        () => {
+          if (this.data.scrollable) {
+            this.queryMultipleNodes();
+          }
         }
-      });
-      this.triggerEvent('linchange', {
+      );
+      this.triggerEvent("linchange", {
         activeKey,
         currentIndex
       });

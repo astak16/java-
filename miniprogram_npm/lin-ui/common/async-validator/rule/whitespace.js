@@ -1,4 +1,4 @@
-import * as util from '../util';
+import * as util from "../util";
 
 /**
  *  Rule for validating whitespace.
@@ -12,7 +12,7 @@ import * as util from '../util';
  *  @param options.messages The validation messages.
  */
 function whitespace(rule, value, source, errors, options) {
-  if (/^\s+$/.test(value) || value === '') {
+  if (/^\s+$/.test(value) || value === "") {
     errors.push(util.format(options.messages.whitespace, rule.fullField));
   }
 }

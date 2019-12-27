@@ -1,4 +1,4 @@
-import Schema from '../common/async-validator/index';
+import Schema from "../common/async-validator/index";
 /**
  * @param tipType String [toast , message , text]
  */
@@ -8,57 +8,47 @@ export default Behavior({
   properties: {
     // 校验
     rules: {
-      type: Object,
+      type: Object
     },
     tipType: {
       type: String,
-      value: ''
+      value: ""
     }
   },
   data: {
-    schema: '',
+    schema: "",
     tipFun: {
-      'message': 'showMessage',
-      'toast': 'showToast',
+      message: "showMessage",
+      toast: "showToast"
     },
     tipContent: {
-      'message': 'content',
-      'toast': 'title',
+      message: "content",
+      toast: "title"
     },
-    errorText: '',
+    errorText: ""
   },
 
   methods: {
     initRules() {
       const rulesName = this.data.name;
-      const {
-        rules
-      } = this.data;
+      const { rules } = this.data;
       if (!rules) return;
       const schema = new Schema({
-        [rulesName]: this.data.rules,
+        [rulesName]: this.data.rules
       });
       this.setData({
-        schema,
+        schema
       });
     },
-    validatorData({
-      value
-    }) {
-      const {
-        rules,
-        tipType,
-        tipFun,
-        tipContent
-      } = this.data;
+    validatorData({ value }) {
+      const { rules, tipType, tipFun, tipContent } = this.data;
 
       if (!rules) return;
       const validateValue = {
         [this.data.name]: value
       };
-      this.data.schema.validate(validateValue, (errors) => {
-
-        this.triggerEvent('linvalidate', {
+      this.data.schema.validate(validateValue, errors => {
+        this.triggerEvent("linvalidate", {
           errors,
           isError: !!errors
         });
@@ -66,7 +56,7 @@ export default Behavior({
         if (errors && tipType) {
           const funName = tipFun[tipType];
           const contentName = tipContent[tipType];
-          if (tipType === 'text') {
+          if (tipType === "text") {
             this.setData({
               errorText: errors[0].message
             });
@@ -75,25 +65,24 @@ export default Behavior({
 
           if (!wx.lin || !wx.lin[funName]) {
             wx.showToast({
-              icon: 'none',
+              icon: "none",
               title: `请在页面内引入${tipType}组件`
             });
             return;
           }
 
-          wx.lin[funName] && wx.lin[funName]({
-            [contentName]: errors[0].message,
-            duration: 1500,
-            mask: false,
-          });
+          wx.lin[funName] &&
+            wx.lin[funName]({
+              [contentName]: errors[0].message,
+              duration: 1500,
+              mask: false
+            });
         } else if (!errors && tipType) {
           this.setData({
-            errorText: ''
+            errorText: ""
           });
         }
-
       });
-
     }
   }
 });

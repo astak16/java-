@@ -1,12 +1,12 @@
-import hover from '../behaviors/hover';
+import hover from "../behaviors/hover";
 
 Component({
-  behaviors:[hover],
+  behaviors: [hover],
   externalClasses: [
-    'l-class',
-    'l-symbol-class',
-    'l-count-class',
-    'l-disabled-class'
+    "l-class",
+    "l-symbol-class",
+    "l-count-class",
+    "l-disabled-class"
   ],
   properties: {
     count: {
@@ -39,8 +39,8 @@ Component({
   },
 
   observers: {
-    'count,min,max': function () {
-      this.valueRange(this.data.count, 'parameter');
+    "count,min,max": function() {
+      this.valueRange(this.data.count, "parameter");
     }
   },
 
@@ -50,10 +50,14 @@ Component({
   methods: {
     doNothing(e) {
       const { type } = e.currentTarget.dataset;
-      this.triggerEvent('linout', { type, way: 'icon' }, {
-        bubbles: true,
-        composed: true
-      });
+      this.triggerEvent(
+        "linout",
+        { type, way: "icon" },
+        {
+          bubbles: true,
+          composed: true
+        }
+      );
     },
 
     onCount() {
@@ -66,19 +70,21 @@ Component({
       this.setData({
         focus: false
       });
-      let {
-        value
-      } = e.detail;
+      let { value } = e.detail;
       setTimeout(() => {
         this.blurCount(Number(value), () => {
           this.data.count = this.data.result;
-          this.triggerEvent('lintap', {
-            count: this.data.result,
-            type: 'blur'
-          }, {
-            bubbles: true,
-            composed: true
-          });
+          this.triggerEvent(
+            "lintap",
+            {
+              count: this.data.result,
+              type: "blur"
+            },
+            {
+              bubbles: true,
+              composed: true
+            }
+          );
         });
       }, 50);
     },
@@ -94,25 +100,39 @@ Component({
       callback && callback();
     },
 
-    valueRange(value, way = 'input') {
+    valueRange(value, way = "input") {
       if (value > this.properties.max) {
-        this.setData({
-          result: this.properties.max
-        }, () => {
-          this.triggerEvent('linout', { type: 'overflow_max', way }, {
-            bubbles: true,
-            composed: true
-          });
-        });
+        this.setData(
+          {
+            result: this.properties.max
+          },
+          () => {
+            this.triggerEvent(
+              "linout",
+              { type: "overflow_max", way },
+              {
+                bubbles: true,
+                composed: true
+              }
+            );
+          }
+        );
       } else if (value < this.properties.min) {
-        this.setData({
-          result: this.properties.min
-        }, () => {
-          this.triggerEvent('linout', { type: 'overflow_min', way }, {
-            bubbles: true,
-            composed: true
-          });
-        });
+        this.setData(
+          {
+            result: this.properties.min
+          },
+          () => {
+            this.triggerEvent(
+              "linout",
+              { type: "overflow_min", way },
+              {
+                bubbles: true,
+                composed: true
+              }
+            );
+          }
+        );
       } else {
         this.setData({
           result: value
@@ -130,13 +150,17 @@ Component({
       this.setData({
         result: this.data.count
       });
-      this.triggerEvent('lintap', {
-        count: this.data.result,
-        type: 'reduce'
-      }, {
-        bubbles: true,
-        composed: true
-      });
+      this.triggerEvent(
+        "lintap",
+        {
+          count: this.data.result,
+          type: "reduce"
+        },
+        {
+          bubbles: true,
+          composed: true
+        }
+      );
     },
 
     addTap() {
@@ -149,13 +173,17 @@ Component({
       this.setData({
         result: this.data.count
       });
-      this.triggerEvent('lintap', {
-        count: this.data.result,
-        type: 'add'
-      }, {
-        bubbles: true,
-        composed: true
-      });
-    },
+      this.triggerEvent(
+        "lintap",
+        {
+          count: this.data.result,
+          type: "add"
+        },
+        {
+          bubbles: true,
+          composed: true
+        }
+      );
+    }
   }
 });

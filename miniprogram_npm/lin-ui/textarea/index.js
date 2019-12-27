@@ -1,22 +1,22 @@
 // input/input.js
-import rules from '../behaviors/rules';
+import rules from "../behaviors/rules";
 
 Component({
   /**
    * 组件的属性列表
    */
-  behaviors: ['wx://form-field', rules],
-  externalClasses: ['l-class', 'l-error-text', 'l-error-text-class'],
+  behaviors: ["wx://form-field", rules],
+  externalClasses: ["l-class", "l-error-text", "l-error-text-class"],
   properties: {
     // 占位文本
     placeholder: {
       type: String,
-      value: ''
+      value: ""
     },
     // 输入框的值
     value: {
       type: String,
-      value: ''
+      value: ""
     },
     // 获取焦点
     focus: {
@@ -50,21 +50,19 @@ Component({
     },
     // 校验
     rules: {
-      type: Object,
+      type: Object
     },
-    // 占位文字的样式  
+    // 占位文字的样式
     placeholderStyle: {
       type: String,
-      value: ''
+      value: ""
     }
   },
 
   /**
    * 组件的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   attached() {
     this.initRules();
@@ -75,33 +73,29 @@ Component({
    */
   methods: {
     handleInputChange(event) {
-      const {
-        detail = {}
-      } = event;
-      const {
-        value = ''
-      } = detail;
+      const { detail = {} } = event;
+      const { value = "" } = detail;
 
       this.setData({
         value
       });
 
-      this.triggerEvent('lininput', event.detail);
+      this.triggerEvent("lininput", event.detail);
     },
 
     handleInputFocus(event) {
-      this.triggerEvent('linfocus', event.detail);
+      this.triggerEvent("linfocus", event.detail);
     },
 
     handleInputBlur(event) {
       this.validatorData({
         value: event.detail.value
       });
-      this.triggerEvent('linblur', event.detail);
+      this.triggerEvent("linblur", event.detail);
     },
     handleInputConfirm(event) {
-      this.triggerEvent('linconfirm', event.detail);
-    },
+      this.triggerEvent("linconfirm", event.detail);
+    }
     // onClearTap(e) {
     //   this.setData({ value: '' })
     // },

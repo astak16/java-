@@ -1,21 +1,23 @@
 // components/tab/index.js
 Component({
   relations: {
-    '../tabs/index': {
-      type: 'parent',
+    "../tabs/index": {
+      type: "parent",
       linked: function(target) {
-        !this.data.parent && this.setData({
-          parent: target
-        });
+        !this.data.parent &&
+          this.setData({
+            parent: target
+          });
         // 每次被插入到custom-ul时执行，target是custom-ul节点实例对象，触发在attached生命周期之后
       }
     },
-    '../combined-tabs/index': {
-      type: 'parent',
+    "../combined-tabs/index": {
+      type: "parent",
       linked: function(target) {
-        !this.data.parent && this.setData({
-          parent: target
-        });
+        !this.data.parent &&
+          this.setData({
+            parent: target
+          });
         // 每次被插入到custom-ul时执行，target是custom-ul节点实例对象，触发在attached生命周期之后
       }
     }
@@ -31,17 +33,17 @@ Component({
     icon: String,
     iconSize: {
       type: String,
-      value: '20'
+      value: "20"
     },
     image: Object,
     picPlacement: {
       type: String,
-      value: 'top'
+      value: "top"
     }
   },
 
   observers: {
-    '**': function(filed) {
+    "**": function(filed) {
       this.updateData(filed);
     }
   },

@@ -1,11 +1,12 @@
 // eslint-disable-next-line no-undef
 export default Behavior({
   observers: {
-    'show': function (show) {
+    show: function(show) {
       show && this.changeStatus();
-      if (!show) this.setData({
-        status: show
-      });
+      if (!show)
+        this.setData({
+          status: show
+        });
     }
   },
   methods: {

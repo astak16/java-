@@ -1,10 +1,10 @@
-import hover from '../behaviors/hover';
+import hover from "../behaviors/hover";
 
 Component({
-  behaviors:[hover],
+  behaviors: [hover],
   relations: {
-    '../list/index': {
-      type: 'parent', // 关联的目标节点应为子节点
+    "../list/index": {
+      type: "parent", // 关联的目标节点应为子节点
       linked() {
         // 每次有custom-li被插入时执行，target是该节点实例对象，触发在该节点attached生命周期之后
       },
@@ -21,45 +21,45 @@ Component({
     multipleSlots: true
   },
   externalClasses: [
-    'l-class',
-    'l-class-icon',
-    'l-icon-class',
-    'l-class-image',
-    'l-image-class',
-    'l-class-right',
-    'l-right-class',
-    'l-class-content',
-    'l-content-class',
-    'l-class-desc',
-    'l-desc-class'
+    "l-class",
+    "l-class-icon",
+    "l-icon-class",
+    "l-class-image",
+    "l-image-class",
+    "l-class-right",
+    "l-right-class",
+    "l-class-content",
+    "l-content-class",
+    "l-class-desc",
+    "l-desc-class"
   ],
   properties: {
     icon: String,
     iconColor: {
       type: String,
-      value: '#3963BC'
+      value: "#3963BC"
     },
     iconSize: {
       type: String,
-      value: '28'
+      value: "28"
     },
     image: String,
     title: String,
     desc: String,
     tagPosition: {
       type: String,
-      value: 'left'
+      value: "left"
     },
     tagContent: String,
     tagShape: {
       type: String,
-      value: 'square'
+      value: "square"
     },
     tagColor: String,
     tagPlain: Boolean,
     badgePosition: {
       type: String,
-      value: 'left'
+      value: "left"
     },
     dotBadge: Boolean,
     badgeCount: Number,
@@ -69,7 +69,7 @@ Component({
     },
     badgeCountType: {
       type: String,
-      value: 'overflow'
+      value: "overflow"
     },
     rightDesc: String,
     gap: Number,
@@ -77,30 +77,30 @@ Component({
     rightGap: Number,
     isLink: {
       type: Boolean,
-      value: true,
+      value: true
     },
     linkType: {
       type: String,
-      value: 'navigateTo'
+      value: "navigateTo"
     },
     url: String
-
   },
 
   methods: {
-    tapcell: function (e) {
-      const {
-        linkType,
-        url
-      } = e.currentTarget.dataset;
+    tapcell: function(e) {
+      const { linkType, url } = e.currentTarget.dataset;
       if (url) {
         wx[linkType]({
           url
         });
       }
-      this.triggerEvent('lintap', {
-        e
-      }, { bubbles: true, composed: true });
+      this.triggerEvent(
+        "lintap",
+        {
+          e
+        },
+        { bubbles: true, composed: true }
+      );
     }
   }
 });

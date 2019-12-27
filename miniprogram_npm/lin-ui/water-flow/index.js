@@ -1,17 +1,17 @@
 Component({
   /**
-  * 组件的属性列表
-  */
+   * 组件的属性列表
+   */
   properties: {
     columnGap: {
       type: String,
-      value: '20rpx'
+      value: "20rpx"
     }
   },
 
   /**
-  * 组件的初始数据
-  */
+   * 组件的初始数据
+   */
   data: {
     data: [],
     leftData: [],
@@ -34,8 +34,8 @@ Component({
     _init() {
       wx.lin = wx.lin || {};
       wx.lin.renderWaterFlow = (data = [], refresh = false, success) => {
-        if (Object.prototype.toString.call(data) !== '[object Array]') {
-          console.error('[data]参数类型错误，渲染失败');
+        if (Object.prototype.toString.call(data) !== "[object Array]") {
+          console.error("[data]参数类型错误，渲染失败");
           return false;
         }
         // 绑定data，判断data是否为[]
@@ -51,8 +51,8 @@ Component({
     },
     _select(data, refresh) {
       const query = wx.createSelectorQuery().in(this);
-      this.columnNodes = query.selectAll('#left, #right');
-      return new Promise((resolve) => {
+      this.columnNodes = query.selectAll("#left, #right");
+      return new Promise(resolve => {
         this._render(data, 0, refresh, () => {
           resolve();
         });
@@ -70,12 +70,15 @@ Component({
             this.data.rightData.push(data[i]);
           }
 
-          this.setData({
-            leftData: this.data.leftData,
-            rightData: this.data.rightData
-          }, () => {
-            this._render(data, ++i, false, success);
-          });
+          this.setData(
+            {
+              leftData: this.data.leftData,
+              rightData: this.data.rightData
+            },
+            () => {
+              this._render(data, ++i, false, success);
+            }
+          );
         });
       } else {
         success && success();

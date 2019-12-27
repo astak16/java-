@@ -5,16 +5,18 @@ export default Behavior({
       return new Promise((resolve, reject) => {
         const query = wx.createSelectorQuery().in(this);
         const type = all ? query.selectAll(selector) : query.select(selector);
-        type.boundingClientRect((res) => {
-          if (!res) return reject('找不到元素');
-          resolve(res);
-        }).exec();
+        type
+          .boundingClientRect(res => {
+            if (!res) return reject("找不到元素");
+            resolve(res);
+          })
+          .exec();
       });
     },
-    queryScrollNode(res, currentIndex, type = 'width') {
+    queryScrollNode(res, currentIndex, type = "width") {
       const currentRect = res[currentIndex];
 
-      this.getRect('.l-tabsscroll').then(_ => {
+      this.getRect(".l-tabsscroll").then(_ => {
         const scrollWidth = _[type];
 
         let transformDistance = res
@@ -23,7 +25,7 @@ export default Behavior({
 
         transformDistance += (currentRect[type] - scrollWidth) / 2;
 
-        if (type === 'width') {
+        if (type === "width") {
           this.setData({
             transformX: transformDistance,
             transformY: 0
@@ -37,18 +39,14 @@ export default Behavior({
       });
     },
     queryMultipleNodes() {
-      const {
-        placement,
-        currentIndex
-      } = this.data;
-      this.getRect('.l-tabs-item', true)
-        .then((res) => {
-          if (['top', 'bottom'].indexOf(placement) !== -1) {
-            this.queryScrollNode(res, currentIndex);
-          } else {
-            this.queryScrollNode(res, currentIndex, 'height');
-          }
-        });
+      const { placement, currentIndex } = this.data;
+      this.getRect(".l-tabs-item", true).then(res => {
+        if (["top", "bottom"].indexOf(placement) !== -1) {
+          this.queryScrollNode(res, currentIndex);
+        } else {
+          this.queryScrollNode(res, currentIndex, "height");
+        }
+      });
     }
   }
 });

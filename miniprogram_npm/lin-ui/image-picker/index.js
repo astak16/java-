@@ -3,8 +3,8 @@ Component({
   /**
    * 组件的属性列表
    */
-  externalClasses: ['l-class', 'l-item-class'],
-  behaviors: ['wx://form-field'],
+  externalClasses: ["l-class", "l-item-class"],
+  behaviors: ["wx://form-field"],
   properties: {
     urls: {
       type: Array,
@@ -19,7 +19,7 @@ Component({
     clear: {
       type: Boolean,
       value: false,
-      observer: function (newVal) {
+      observer: function(newVal) {
         if (newVal) {
           this.handleClear();
         }
@@ -33,12 +33,12 @@ Component({
     // 所选的图片的尺寸 ['original', 'compressed']
     sizeType: {
       type: String,
-      value: 'original',
+      value: "original"
     },
     // 图片裁剪、缩放的模式
     mode: {
       type: String,
-      value: 'aspectFit', // 参考微信小程序 image 组件的mode属性列表
+      value: "aspectFit" // 参考微信小程序 image 组件的mode属性列表
     },
     // 设置是否传入slot
     custom: {
@@ -53,7 +53,7 @@ Component({
     // 所选图片最大限制，单位字节
     maxImageSize: {
       type: Number,
-      value: 10000000,
+      value: 10000000
     }
   },
 
@@ -62,20 +62,22 @@ Component({
    */
   data: {
     showBtn: true,
-    tempFilePath: '',
+    tempFilePath: ""
   },
 
   lifetimes: {
-    attached: function () {
+    attached: function() {
       // 在组件实例进入页面节点树时执行
       const newOrOld = this.judgeNewOrOld();
       this.setData({
         newOrOld
       });
-      if (newOrOld == 'old') {
-        console.warn('image-picker组件已经升级，建议使用最新版本，当前用法会在后续版本中暂停支持');
+      if (newOrOld == "old") {
+        console.warn(
+          "image-picker组件已经升级，建议使用最新版本，当前用法会在后续版本中暂停支持"
+        );
       }
-    },
+    }
   },
 
   /**
@@ -91,32 +93,30 @@ Component({
       });
       let info = {
         all: urls,
-        current: urls,
+        current: urls
       };
 
       let option = {};
-      this.triggerEvent('linclear', info, option);
+      this.triggerEvent("linclear", info, option);
     },
 
     // 预览 preview
     onPreviewTap(e) {
       const index = e.currentTarget.dataset.index;
       const urls = this.data.urls;
-      let tempFilePath = '';
+      let tempFilePath = "";
       let previewImageList = [];
       const newOrOld = this.data.newOrOld;
 
-      if (newOrOld == 'old') {
+      if (newOrOld == "old") {
         tempFilePath = this.data.urls[index];
         previewImageList = this.data.urls;
-
       } else {
         tempFilePath = this.data.urls[index].url;
         for (let i = 0; i < urls.length; i++) {
           previewImageList.push(urls[i].url);
         }
       }
-
 
       let detail = {
         index, // 下标
@@ -130,9 +130,8 @@ Component({
           urls: previewImageList // 需要预览的图片http链接列表
         });
       }
-      this.triggerEvent('linpreview', detail, option);
+      this.triggerEvent("linpreview", detail, option);
     },
-
 
     // 增加 add
     onAddTap() {
@@ -145,11 +144,11 @@ Component({
       wx.chooseImage({
         count,
         sizeType: this.data.sizeType,
-        sourceType: ['album', 'camera'],
+        sourceType: ["album", "camera"],
         success(res) {
           // tempFilePath可以作为img标签的src属性显示图片
           let tempFilePath = [];
-          if (newOrOld == 'old') {
+          if (newOrOld == "old") {
             tempFilePath = res.tempFilePaths;
           } else {
             for (let i = 0; i < res.tempFilePaths.length; i++) {
@@ -166,7 +165,7 @@ Component({
             }
           }
           const newtempFilePaths = that.data.urls.concat(tempFilePath);
-          // 判断是否还能继续添加图片 
+          // 判断是否还能继续添加图片
           if (newtempFilePaths.length === parseInt(that.data.count)) {
             that.setData({
               showBtn: false
@@ -183,8 +182,8 @@ Component({
           };
           let option = {};
 
-          that.triggerEvent('linchange', detail, option);
-          that.triggerEvent('linpush', detail, option);
+          that.triggerEvent("linchange", detail, option);
+          that.triggerEvent("linpush", detail, option);
 
           // 超过大小的image集合
           let overSizeList = [];
@@ -198,13 +197,12 @@ Component({
             let detail = {
               current: tempFilePath,
               all: newtempFilePaths,
-              overSizeList: overSizeList,
+              overSizeList: overSizeList
             };
-            that.triggerEvent('linoversize', detail, option);
+            that.triggerEvent("linoversize", detail, option);
           }
         }
       });
-
     },
 
     // 删除 remove
@@ -213,7 +211,7 @@ Component({
       const urls = this.data.urls;
       const tempFilePath = urls[index];
       const tempFilePaths = this.handleSplice(urls, tempFilePath);
-      // 判断是否还能继续添加图片 
+      // 判断是否还能继续添加图片
       if (tempFilePaths.length < parseInt(this.data.count)) {
         this.setData({
           showBtn: true
@@ -222,7 +220,7 @@ Component({
       this.setData({
         tempFilePath,
         urls: tempFilePaths,
-        value: tempFilePaths,
+        value: tempFilePaths
       });
       let detail = {
         index,
@@ -231,24 +229,22 @@ Component({
       };
       let option = {};
 
-      this.triggerEvent('linremove', detail, option);
-
+      this.triggerEvent("linremove", detail, option);
     },
     handleSplice(arr, current) {
       const newArr = arr.filter(item => item !== current);
       return newArr;
     },
 
-    judgeNewOrOld: function () {
+    judgeNewOrOld: function() {
       const urls = this.data.urls;
       if (urls.length != 0) {
-        if (typeof (urls[0]) != 'object') {
-          return 'old';
+        if (typeof urls[0] != "object") {
+          return "old";
         }
-        return 'new';
+        return "new";
       }
-      return 'new';
+      return "new";
     }
-
-  },
+  }
 });

@@ -5,14 +5,14 @@ export default Behavior({
   data: {
     distance: 0
   },
-  attached(){
+  attached() {
     this.offsetMargin();
   },
   methods: {
     offsetMargin() {
       const { windowHeight, screenHeight } = wx.getSystemInfoSync();
       this.setData({
-        distance: (screenHeight-windowHeight )
+        distance: screenHeight - windowHeight
       });
     }
   }

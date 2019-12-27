@@ -1,23 +1,28 @@
 // input/input.js
-import rules from '../behaviors/rules';
+import rules from "../behaviors/rules";
 
 Component({
   /**
    * 组件的属性列表
    */
   options: {
-    multipleSlots: true,
+    multipleSlots: true
   },
-  behaviors: ['wx://form-field', rules],
-  externalClasses: ['l-class', 'l-label-class','l-error-text','l-error-text-class'],
+  behaviors: ["wx://form-field", rules],
+  externalClasses: [
+    "l-class",
+    "l-label-class",
+    "l-error-text",
+    "l-error-text-class"
+  ],
   properties: {
     // 表单标题（label）的文本
     label: {
       type: String,
-      value: ''
+      value: ""
     },
     // 是否隐藏label
-    hideLabel:{
+    hideLabel: {
       type: Boolean,
       value: false
     },
@@ -39,17 +44,17 @@ Component({
     // 占位文本
     placeholder: {
       type: String,
-      value: ''
+      value: ""
     },
     // 输入框类型
     type: {
       type: String,
-      value: 'text'
+      value: "text"
     },
     // 输入框的值
     value: {
       type: String,
-      value: ''
+      value: ""
     },
     // 是否需要冒号
     colon: {
@@ -84,26 +89,24 @@ Component({
     // label标题的显示位置 left top right
     labelLayout: {
       type: String,
-      value: 'left'
+      value: "left"
     },
     // 是否禁用
     disabled: {
       type: Boolean,
       value: false
     },
-    // 占位文字的样式  
+    // 占位文字的样式
     placeholderStyle: {
       type: String,
-      value: ''
-    },
+      value: ""
+    }
   },
 
   /**
    * 组件的初始数据
    */
-  data: {
-
-  },
+  data: {},
   attached() {
     this.initRules();
   },
@@ -111,51 +114,42 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
     handleInputChange(event) {
-      const {
-        detail = {}
-      } = event;
-      const {
-        value = ''
-      } = detail;
+      const { detail = {} } = event;
+      const { value = "" } = detail;
 
       this.setData({
         value
       });
 
-      this.triggerEvent('lininput', event.detail);
+      this.triggerEvent("lininput", event.detail);
     },
 
     handleInputFocus(event) {
-      this.triggerEvent('linfocus', event.detail);
+      this.triggerEvent("linfocus", event.detail);
     },
 
     handleInputBlur(event) {
       this.validatorData({
         value: event.detail.value
       });
-      this.triggerEvent('linblur', event.detail);
+      this.triggerEvent("linblur", event.detail);
     },
     handleInputConfirm(event) {
-      const {
-        detail = {}
-      } = event;
-      const {
-        value = ''
-      } = detail;
+      const { detail = {} } = event;
+      const { value = "" } = detail;
 
       this.setData({
         value
       });
 
-      this.triggerEvent('linconfirm', event.detail);
+      this.triggerEvent("linconfirm", event.detail);
     },
     onClearTap(event) {
       this.setData({
-        value: ''
+        value: ""
       });
-      this.triggerEvent('linclear', event.detail);
-    },
+      this.triggerEvent("linclear", event.detail);
+    }
   }
 });

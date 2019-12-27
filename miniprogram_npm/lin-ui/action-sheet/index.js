@@ -1,9 +1,16 @@
-import zIndex from '../behaviors/zIndex';
-import hover from '../behaviors/hover';
+import zIndex from "../behaviors/zIndex";
+import hover from "../behaviors/hover";
 
 Component({
-  behaviors: [zIndex,hover],
-  externalClasses: ['l-class-title', 'l-class-item', 'l-class-cancel','l-title-class','l-item-class','l-cancel-class'],
+  behaviors: [zIndex, hover],
+  externalClasses: [
+    "l-class-title",
+    "l-class-item",
+    "l-class-cancel",
+    "l-title-class",
+    "l-item-class",
+    "l-cancel-class"
+  ],
   properties: {
     locked: Boolean,
     showCancel: Boolean,
@@ -11,21 +18,21 @@ Component({
     itemList: Array,
     cancelText: {
       type: String,
-      value: '取消'
+      value: "取消"
     },
     title: String,
-    zIndex:{
-      type:Number,
+    zIndex: {
+      type: Number,
       value: 777
     },
     openApi: {
       type: Boolean,
-      value: true,
+      value: true
     }
   },
   data: {
-    success: '',
-    fail: '',
+    success: "",
+    fail: "",
     isIphoneX: false
   },
   attached() {
@@ -40,33 +47,32 @@ Component({
       if (this.data.openApi) {
         this.initActionSheet();
       }
-
-    },
+    }
   },
   methods: {
     /**
-   * 区分UI尺寸
-   */
+     * 区分UI尺寸
+     */
     initUIAdapter() {
       wx.getSystemInfo({
-        success: (res) => {
+        success: res => {
           this.setData({
-            isIphoneX: res.model == 'iPhone X' ? true : false,
+            isIphoneX: res.model == "iPhone X" ? true : false
           });
         }
       });
     },
     initActionSheet() {
       wx.lin = wx.lin || {};
-      wx.lin.showActionSheet = (options={}) => {
+      wx.lin.showActionSheet = (options = {}) => {
         const {
           itemList = [],
           success = null,
           fail = null,
-          title = '',
+          title = "",
           locked = false,
-          cancelText = '取消',
-          showCancel = false,
+          cancelText = "取消",
+          showCancel = false
         } = options;
         this.setData({
           itemList: itemList.slice(0, 10),
@@ -76,17 +82,19 @@ Component({
           locked,
           cancelText,
           showCancel,
-          show: true,
+          show: true
         });
         return this;
       };
     },
     handleClickItem(e) {
-      const {
-        success
-      } = this.data;
+      const { success } = this.data;
       success && success({ ...e.currentTarget.dataset });
-      this.triggerEvent('linitemtap', { ...e.currentTarget.dataset },{ bubbles: true, composed: true });
+      this.triggerEvent(
+        "linitemtap",
+        { ...e.currentTarget.dataset },
+        { bubbles: true, composed: true }
+      );
       this._hideActionSheet();
     },
 
@@ -103,15 +111,18 @@ Component({
     },
 
     handleClickCancel() {
-      const {
-        fail
-      } = this.data;
-      fail && fail({
-        errMsg: 'showactionsheet:fail cancel'
-      });
-      this.triggerEvent('lincancel', {
-        errMsg: 'showactionsheet:fail cancel'
-      },{ bubbles: true, composed: true });
+      const { fail } = this.data;
+      fail &&
+        fail({
+          errMsg: "showactionsheet:fail cancel"
+        });
+      this.triggerEvent(
+        "lincancel",
+        {
+          errMsg: "showactionsheet:fail cancel"
+        },
+        { bubbles: true, composed: true }
+      );
       this._hideActionSheet();
     },
 
@@ -119,6 +130,6 @@ Component({
       if (!this.data.locked) {
         this.handleClickCancel();
       }
-    },
+    }
   }
 });

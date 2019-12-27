@@ -5,7 +5,7 @@ Component({
    * 组件的属性列表
    */
   options: {
-    multipleSlots: true,
+    multipleSlots: true
   },
   properties: {
     // 组件显示区域的宽度
@@ -16,7 +16,7 @@ Component({
     // 组件显示区域的高度
     height: {
       type: Number,
-      value: 100,
+      value: 100
     },
     // 组件滑动显示区域的宽度
     slideWidth: {
@@ -42,14 +42,14 @@ Component({
     close: {
       type: Boolean,
       value: false,
-      observer: function (newVal) {
+      observer: function(newVal) {
         if (newVal) {
           this.setData({
             popup: false,
             x: 0
           });
           this.onCloseTap();
-        } 
+        }
       }
     }
   },
@@ -62,7 +62,7 @@ Component({
     //  movable-view偏移量
     x: 0,
     //  movable-view是否可以出界
-    out: false,
+    out: false
   },
 
   /**
@@ -73,19 +73,23 @@ Component({
   },
   methods: {
     updateRight() {
-
       // 获取右侧滑动显示区域的宽度
-      const that = this; 
+      const that = this;
       const query = wx.createSelectorQuery().in(this);
-      query.select('.right').boundingClientRect(function (res) {
-        that._slideWidth = res.width;
-        let width = res.width <=50 ? res.width : 50;
-        that._threshold = that.properties.threshold ? that.properties.threshold : width;
-        that._viewWidth = that.data.width + res.width * (750 / _windowWidth);
-        that.setData({
-          viewWidth: that._viewWidth
-        });
-      }).exec();
+      query
+        .select(".right")
+        .boundingClientRect(function(res) {
+          that._slideWidth = res.width;
+          let width = res.width <= 50 ? res.width : 50;
+          that._threshold = that.properties.threshold
+            ? that.properties.threshold
+            : width;
+          that._viewWidth = that.data.width + res.width * (750 / _windowWidth);
+          that.setData({
+            viewWidth: that._viewWidth
+          });
+        })
+        .exec();
     },
     onTouchStart(e) {
       this._startX = e.changedTouches[0].pageX;
@@ -97,19 +101,14 @@ Component({
       this._endX = e.changedTouches[0].pageX;
       this._length = this._endX - this._startX;
 
-      const {
-        _endX,
-        _startX,
-        _threshold
-      } = this;
+      const { _endX, _startX, _threshold } = this;
 
       if (this._length > _threshold) {
         this.setData({
           popup: false,
-          x: 0,
+          x: 0
         });
         this.onCloseTap();
-
       }
       if (_endX > _startX && this.data.out === false) return;
       if (_startX - _endX >= _threshold) {
@@ -119,25 +118,26 @@ Component({
           close: false
         });
         this.onOpenTap();
-      } else if (_startX - _endX < _threshold && _startX - _endX > 0 && this.data.popup != true) {
+      } else if (
+        _startX - _endX < _threshold &&
+        _startX - _endX > 0 &&
+        this.data.popup != true
+      ) {
         this.setData({
           x: 0
         });
         this.onCloseTap();
-
       } else if (_endX - _startX >= _threshold) {
         this.setData({
           x: 0
         });
         this.onCloseTap();
-
       } else if (_endX - _startX < _threshold && _endX - _startX > 0) {
         this.setData({
           x: -this._slideWidth,
           close: false
         });
         this.onOpenTap();
-
       }
     },
     //  根据滑动的范围设定是否允许movable-view出界
@@ -155,7 +155,7 @@ Component({
 
     // 点击 右边区域
     onRightTap() {
-      let detail = 'click right';
+      let detail = "click right";
       let option = { bubbles: true, composed: true };
       if (this.properties.autoClose) {
         this.setData({
@@ -165,7 +165,7 @@ Component({
         this.onCloseTap();
       }
 
-      this.triggerEvent('lintap', detail, option);
+      this.triggerEvent("lintap", detail, option);
     },
 
     // 打开后触发
@@ -173,7 +173,7 @@ Component({
       let detail = true;
       let option = { bubbles: true, composed: true };
 
-      this.triggerEvent('slideopen', detail, option);
+      this.triggerEvent("slideopen", detail, option);
     },
 
     // 关闭后触发
@@ -181,7 +181,7 @@ Component({
       let detail = false;
       let option = { bubbles: true, composed: true };
 
-      this.triggerEvent('slideclose', detail, option);
+      this.triggerEvent("slideclose", detail, option);
     }
   }
 });

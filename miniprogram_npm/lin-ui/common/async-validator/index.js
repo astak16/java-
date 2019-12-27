@@ -1,6 +1,12 @@
-import { format, complementError, asyncMap, warning, deepMerge } from './util.js';
-import validators from './validator/index.js';
-import { messages as defaultMessages, newMessages } from './messages.js';
+import {
+  format,
+  complementError,
+  asyncMap,
+  warning,
+  deepMerge
+} from "./util.js";
+import validators from "./validator/index.js";
+import { messages as defaultMessages, newMessages } from "./messages.js";
 
 /**
  *  Encapsulates a validation schema.
@@ -23,11 +29,10 @@ Schema.prototype = {
   },
   define(rules) {
     if (!rules) {
-      throw new Error(
-        'Cannot configure a schema with no rules');
+      throw new Error("Cannot configure a schema with no rules");
     }
-    if (typeof rules !== 'object' || Array.isArray(rules)) {
-      throw new Error('Rules must be an object');
+    if (typeof rules !== "object" || Array.isArray(rules)) {
+      throw new Error("Rules must be an object");
     }
     this.rules = {};
     let z;
@@ -43,7 +48,7 @@ Schema.prototype = {
     let source = source_;
     let options = o;
     let callback = oc;
-    if (typeof options === 'function') {
+    if (typeof options === "function") {
       callback = options;
       options = {};
     }
@@ -97,20 +102,20 @@ Schema.prototype = {
     let value;
     const series = {};
     const keys = options.keys || Object.keys(this.rules);
-    keys.forEach((z) => {
+    keys.forEach(z => {
       arr = this.rules[z];
       value = source[z];
-      arr.forEach((r) => {
+      arr.forEach(r => {
         let rule = r;
-        if (typeof (rule.transform) === 'function') {
+        if (typeof rule.transform === "function") {
           if (source === source_) {
             source = { ...source };
           }
           value = source[z] = rule.transform(value);
         }
-        if (typeof (rule) === 'function') {
+        if (typeof rule === "function") {
           rule = {
-            validator: rule,
+            validator: rule
           };
         } else {
           rule = { ...rule };
@@ -127,128 +132,148 @@ Schema.prototype = {
           rule,
           value,
           source,
-          field: z,
+          field: z
         });
       });
     });
     const errorFields = {};
-    asyncMap(series, options, (data, doIt) => {
-      const rule = data.rule;
-      let deep = (rule.type === 'object' || rule.type === 'array') &&
-        (typeof (rule.fields) === 'object' || typeof (rule.defaultField) === 'object');
-      deep = deep && (rule.required || (!rule.required && data.value));
-      rule.field = data.field;
-      function addFullfield(key, schema) {
-        return {
-          ...schema,
-          fullField: `${rule.fullField}.${key}`,
-        };
-      }
-
-      function cb(e = []) {
-        let errors = e;
-        if (!Array.isArray(errors)) {
-          errors = [errors];
-        }
-        if (errors.length) {
-          warning('async-validator:', errors);
-        }
-        if (errors.length && rule.message) {
-          errors = [].concat(rule.message);
+    asyncMap(
+      series,
+      options,
+      (data, doIt) => {
+        const rule = data.rule;
+        let deep =
+          (rule.type === "object" || rule.type === "array") &&
+          (typeof rule.fields === "object" ||
+            typeof rule.defaultField === "object");
+        deep = deep && (rule.required || (!rule.required && data.value));
+        rule.field = data.field;
+        function addFullfield(key, schema) {
+          return {
+            ...schema,
+            fullField: `${rule.fullField}.${key}`
+          };
         }
 
-        errors = errors.map(complementError(rule));
+        function cb(e = []) {
+          let errors = e;
+          if (!Array.isArray(errors)) {
+            errors = [errors];
+          }
+          if (errors.length) {
+            warning("async-validator:", errors);
+          }
+          if (errors.length && rule.message) {
+            errors = [].concat(rule.message);
+          }
 
-        if (options.first && errors.length) {
-          errorFields[rule.field] = 1;
-          return doIt(errors);
-        }
-        if (!deep) {
-          doIt(errors);
-        } else {
-          // if rule is required but the target object
-          // does not exist fail at the rule level and don't
-          // go deeper
-          if (rule.required && !data.value) {
-            if (rule.message) {
-              errors = [].concat(rule.message).map(complementError(rule));
-            } else if (options.error) {
-              errors = [options.error(rule, format(options.messages.required, rule.field))];
-            } else {
-              errors = [];
-            }
+          errors = errors.map(complementError(rule));
+
+          if (options.first && errors.length) {
+            errorFields[rule.field] = 1;
             return doIt(errors);
           }
+          if (!deep) {
+            doIt(errors);
+          } else {
+            // if rule is required but the target object
+            // does not exist fail at the rule level and don't
+            // go deeper
+            if (rule.required && !data.value) {
+              if (rule.message) {
+                errors = [].concat(rule.message).map(complementError(rule));
+              } else if (options.error) {
+                errors = [
+                  options.error(
+                    rule,
+                    format(options.messages.required, rule.field)
+                  )
+                ];
+              } else {
+                errors = [];
+              }
+              return doIt(errors);
+            }
 
-          let fieldsSchema = {};
-          if (rule.defaultField) {
-            for (const k in data.value) {
-              if (data.value.hasOwnProperty(k)) {
-                fieldsSchema[k] = rule.defaultField;
+            let fieldsSchema = {};
+            if (rule.defaultField) {
+              for (const k in data.value) {
+                if (data.value.hasOwnProperty(k)) {
+                  fieldsSchema[k] = rule.defaultField;
+                }
               }
             }
-          }
-          fieldsSchema = {
-            ...fieldsSchema,
-            ...data.rule.fields,
-          };
-          for (const f in fieldsSchema) {
-            if (fieldsSchema.hasOwnProperty(f)) {
-              const fieldSchema = Array.isArray(fieldsSchema[f]) ?
-                fieldsSchema[f] : [fieldsSchema[f]];
-              fieldsSchema[f] = fieldSchema.map(addFullfield.bind(null, f));
+            fieldsSchema = {
+              ...fieldsSchema,
+              ...data.rule.fields
+            };
+            for (const f in fieldsSchema) {
+              if (fieldsSchema.hasOwnProperty(f)) {
+                const fieldSchema = Array.isArray(fieldsSchema[f])
+                  ? fieldsSchema[f]
+                  : [fieldsSchema[f]];
+                fieldsSchema[f] = fieldSchema.map(addFullfield.bind(null, f));
+              }
             }
+            const schema = new Schema(fieldsSchema);
+            schema.messages(options.messages);
+            if (data.rule.options) {
+              data.rule.options.messages = options.messages;
+              data.rule.options.error = options.error;
+            }
+            schema.validate(data.value, data.rule.options || options, errs => {
+              doIt(errs && errs.length ? errors.concat(errs) : errs);
+            });
           }
-          const schema = new Schema(fieldsSchema);
-          schema.messages(options.messages);
-          if (data.rule.options) {
-            data.rule.options.messages = options.messages;
-            data.rule.options.error = options.error;
-          }
-          schema.validate(data.value, data.rule.options || options, (errs) => {
-            doIt(errs && errs.length ? errors.concat(errs) : errs);
-          });
         }
-      }
 
-      const res = rule.validator(
-        rule, data.value, cb, data.source, options);
-      if (res && res.then) {
-        res.then(() => cb(), e => cb(e));
+        const res = rule.validator(rule, data.value, cb, data.source, options);
+        if (res && res.then) {
+          res.then(
+            () => cb(),
+            e => cb(e)
+          );
+        }
+      },
+      results => {
+        complete(results);
       }
-    }, (results) => {
-      complete(results);
-    });
+    );
   },
   getType(rule) {
-    if (rule.type === undefined && (rule.pattern instanceof RegExp)) {
-      rule.type = 'pattern';
+    if (rule.type === undefined && rule.pattern instanceof RegExp) {
+      rule.type = "pattern";
     }
-    if (typeof (rule.validator) !== 'function' &&
-      (rule.type && !validators.hasOwnProperty(rule.type))) {
-      throw new Error(format('Unknown rule type %s', rule.type));
+    if (
+      typeof rule.validator !== "function" &&
+      rule.type &&
+      !validators.hasOwnProperty(rule.type)
+    ) {
+      throw new Error(format("Unknown rule type %s", rule.type));
     }
-    return rule.type || 'string';
+    return rule.type || "string";
   },
   getValidationMethod(rule) {
-    if (typeof rule.validator === 'function') {
+    if (typeof rule.validator === "function") {
       return rule.validator;
     }
     const keys = Object.keys(rule);
-    const messageIndex = keys.indexOf('message');
+    const messageIndex = keys.indexOf("message");
     if (messageIndex !== -1) {
       keys.splice(messageIndex, 1);
     }
-    if (keys.length === 1 && keys[0] === 'required') {
+    if (keys.length === 1 && keys[0] === "required") {
       return validators.required;
     }
     return validators[this.getType(rule)] || false;
-  },
+  }
 };
 
 Schema.register = function register(type, validator) {
-  if (typeof validator !== 'function') {
-    throw new Error('Cannot register a validator by type, validator is not a function');
+  if (typeof validator !== "function") {
+    throw new Error(
+      "Cannot register a validator by type, validator is not a function"
+    );
   }
   validators[type] = validator;
 };

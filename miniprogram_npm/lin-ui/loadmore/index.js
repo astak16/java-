@@ -1,5 +1,10 @@
 Component({
-  externalClasses: ['l-class','l-loading-class','l-end-class','l-line-class'],
+  externalClasses: [
+    "l-class",
+    "l-loading-class",
+    "l-end-class",
+    "l-line-class"
+  ],
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
   },
@@ -10,25 +15,23 @@ Component({
     color: String,
     size: {
       type: String,
-      value: '28'
+      value: "28"
     },
     type: {
       type: String,
-      value: 'loading'
+      value: "loading"
     },
     endText: {
       type: String,
-      value: '我是有底线的~'
+      value: "我是有底线的~"
     },
     loadingText: {
       type: String,
-      value: '加载中...'
+      value: "加载中..."
     }
   },
 
-  data: {
-
-  },
+  data: {},
 
   attached() {
     this._init();
@@ -37,21 +40,21 @@ Component({
   pageLifetimes: {
     show() {
       this._init();
-    },
+    }
   },
 
   methods: {
     _init() {
       wx.lin = wx.lin || {};
-      wx.lin.showLoadmore = (options) => {
+      wx.lin.showLoadmore = options => {
         const {
           custom = false,
           line = false,
-          color = '',
-          size = '28',
-          type = 'loading',
-          endText = '我是有底线的',
-          loadingText = '加载中...'
+          color = "",
+          size = "28",
+          type = "loading",
+          endText = "我是有底线的",
+          loadingText = "加载中..."
         } = { ...options };
         this.setData({
           custom,
@@ -71,10 +74,14 @@ Component({
       };
     },
     onLoadmore() {
-      this.triggerEvent('lintap', {}, {
-        bubbles: true,
-        composed: true
-      });
+      this.triggerEvent(
+        "lintap",
+        {},
+        {
+          bubbles: true,
+          composed: true
+        }
+      );
     }
   }
 });

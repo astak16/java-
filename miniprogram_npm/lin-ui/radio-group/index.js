@@ -1,17 +1,16 @@
 Component({
-  externalClasses: ['l-class', 'l-error-text', 'l-error-text-class'],
-  behaviors: ['wx://form-field'],
+  externalClasses: ["l-class", "l-error-text", "l-error-text-class"],
+  behaviors: ["wx://form-field"],
   relations: {
-    '../radio/index': {
-      type: 'child',
+    "../radio/index": {
+      type: "child",
       linked() {
         // const currentLength = this.add();
         // if (currentLength === this.properties.length) {
         this.init();
         // }
       },
-      linkChanged() {
-      },
+      linkChanged() {},
       unlinked() {
         this.init();
       }
@@ -27,8 +26,8 @@ Component({
     },
     placement: {
       type: String,
-      value: 'column', //column row
-    },
+      value: "column" //column row
+    }
   },
   data: {
     currentLength: 0
@@ -59,7 +58,8 @@ Component({
     isRepeat(arr) {
       let hash = {};
       for (let i in arr) {
-        if (hash[arr[i]]) //hash 哈希
+        if (hash[arr[i]])
+          //hash 哈希
           return arr[i];
         hash[arr[i]] = true;
       }
@@ -67,34 +67,34 @@ Component({
     },
 
     init() {
-      const items = this.getRelationNodes('../radio/index');
+      const items = this.getRelationNodes("../radio/index");
       this.checkedKeyRepeat(items);
       this.onChangeHandle(items);
     },
 
     onChangeHandle(items) {
-      items.forEach((item) => {
+      items.forEach(item => {
         let checked = this.properties.current == item.data.key;
         item.setChecked(checked, item.data.key);
       });
     },
 
     onEmitEventHandle(currentItem, select) {
-      this.properties.current = select?currentItem.key:null;
-      const items = this.getRelationNodes('../radio/index');
+      this.properties.current = select ? currentItem.key : null;
+      const items = this.getRelationNodes("../radio/index");
       this.onChangeHandle(items);
       // currentItem.currentKey = this.properties.current
       Object.assign(currentItem, {
         currentKey: this.properties.current
       });
-      this.triggerEvent('linchange', currentItem, {
+      this.triggerEvent("linchange", currentItem, {
         bubbles: true,
         composed: true
       });
     }
   },
   observers: {
-    'current': function() {
+    current: function() {
       this.init();
     }
   }

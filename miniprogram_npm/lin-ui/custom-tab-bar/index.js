@@ -2,7 +2,7 @@ Component({
   properties: {
     position: {
       type: String,
-      value: 'bottom'
+      value: "bottom"
     },
     show: {
       type: Boolean,
@@ -14,23 +14,23 @@ Component({
     },
     color: {
       type: String,
-      value: '#707070'
+      value: "#707070"
     },
     selectedColor: {
       type: String,
-      value: '3963BC'
+      value: "3963BC"
     },
     borderStyle: {
       type: String,
-      value: '#f6f6f6'
+      value: "#f6f6f6"
     },
     backgroundColor: {
       type: String,
-      value: '#fff'
+      value: "#fff"
     },
     backgroundImg: {
       type: String,
-      value: ''
+      value: ""
     },
     fontSize: {
       type: Number,
@@ -69,7 +69,6 @@ Component({
         }
       }
 
-
       this.showItem(data.index);
     },
     show() {
@@ -88,10 +87,10 @@ Component({
       });
       let detail = {
         idx,
-        path:this.route
+        path: this.route
       };
       let option = { bubbles: true, composed: true };
-      this.triggerEvent('lintap', detail, option);
+      this.triggerEvent("lintap", detail, option);
     },
     showRedDot(idx) {
       const redDot = `list[${idx}].redDot`;
@@ -114,7 +113,7 @@ Component({
     removeTabBarBadge(idx) {
       const badge = `list[${idx}].badge`;
       this.setData({
-        [badge]: ''
+        [badge]: ""
       });
     }
   }

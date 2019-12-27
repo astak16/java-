@@ -1,29 +1,29 @@
-import scrollCenter from '../behaviors/scrollCenter';
+import scrollCenter from "../behaviors/scrollCenter";
 Component({
   behaviors: [scrollCenter],
   externalClasses: [
-    'l-class-tabs',
-    'l-class-header',
-    'l-class-active',
-    'l-class-content',
-    'l-class-inactive',
-    'l-class-line',
-    'l-class-tabimage',
-    'l-class-header-line',
-    'l-class-icon',
-    'l-tabs-class',
-    'l-header-class',
-    'l-active-class',
-    'l-content-class',
-    'l-inactive-class',
-    'l-line-class',
-    'l-tabimage-class',
-    'l-header-line-class',
-    'l-icon-class'
+    "l-class-tabs",
+    "l-class-header",
+    "l-class-active",
+    "l-class-content",
+    "l-class-inactive",
+    "l-class-line",
+    "l-class-tabimage",
+    "l-class-header-line",
+    "l-class-icon",
+    "l-tabs-class",
+    "l-header-class",
+    "l-active-class",
+    "l-content-class",
+    "l-inactive-class",
+    "l-line-class",
+    "l-tabimage-class",
+    "l-header-line-class",
+    "l-icon-class"
   ],
   relations: {
-    '../tabpanel/index': {
-      type: 'child',
+    "../tabpanel/index": {
+      type: "child",
       linked() {
         // 每次有子节点被插入时执行，target是该节点实例对象，触发在该节点attached生命周期之后
         this.initTabs();
@@ -31,8 +31,7 @@ Component({
       unlinked() {
         this.initTabs();
       }
-    },
-
+    }
   },
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
@@ -43,11 +42,11 @@ Component({
   properties: {
     activeKey: {
       type: String,
-      value: '',
+      value: ""
     },
     placement: {
       type: String,
-      value: 'top',
+      value: "top"
     },
     animated: Boolean,
     swipeable: Boolean,
@@ -59,36 +58,38 @@ Component({
     animatedForLine: Boolean,
     activeColor: {
       type: String,
-      value: '#333333'
+      value: "#333333"
     },
     inactiveColor: {
       type: String,
-      value: '#bbbbbb'
+      value: "#bbbbbb"
     },
     equalWidth: {
       type: Boolean,
       value: true
     }
-
   },
 
   data: {
     tabList: [],
     currentIndex: 0,
     transformX: 0,
-    transformY: 0,
+    transformY: 0
   },
   observers: {
-    'activeKey': function (newKey) {
-      if(!newKey) return;
-      const index = this.data.tabList.findIndex(tab=>tab.key===newKey);
-      this.setData({
-        currentIndex:index
-      },() => {
-        if (this.data.scrollable) {
-          this.queryMultipleNodes();
+    activeKey: function(newKey) {
+      if (!newKey) return;
+      const index = this.data.tabList.findIndex(tab => tab.key === newKey);
+      this.setData(
+        {
+          currentIndex: index
+        },
+        () => {
+          if (this.data.scrollable) {
+            this.queryMultipleNodes();
+          }
         }
-      });
+      );
     }
   },
 
@@ -96,18 +97,16 @@ Component({
     this.initTabs();
   },
 
-
   /**
    * 组件的方法列表
    */
   methods: {
     initTabs(val = this.data.activeKey) {
-      let items = this.getRelationNodes('../tabpanel/index');
+      let items = this.getRelationNodes("../tabpanel/index");
       if (items.length > 0) {
         let activeKey = val,
           currentIndex = this.data.currentIndex;
         const tab = items.map((item, index) => {
-
           activeKey = !val && index == 0 ? item.data.key : activeKey;
           currentIndex = item.data.key === activeKey ? index : currentIndex;
           return {
@@ -116,26 +115,26 @@ Component({
             icon: item.data.icon,
             iconSize: item.data.iconSize,
             image: item.data.image,
-            picPlacement: item.data.picPlacement,
+            picPlacement: item.data.picPlacement
           };
         });
-        this.setData({
-          tabList: tab,
-          activeKey,
-          currentIndex,
-        }, () => {
-          if (this.data.scrollable) {
-            this.queryMultipleNodes();
+        this.setData(
+          {
+            tabList: tab,
+            activeKey,
+            currentIndex
+          },
+          () => {
+            if (this.data.scrollable) {
+              this.queryMultipleNodes();
+            }
           }
-        });
+        );
       }
     },
     swiperChange(e) {
-      const {
-        source,
-        current
-      } = e.detail;
-      if (source == 'touch') {
+      const { source, current } = e.detail;
+      if (source == "touch") {
         const currentIndex = current;
         const activeKey = this.data.tabList[current].key;
         this._setChangeData({
@@ -153,19 +152,19 @@ Component({
       });
     },
 
-    _setChangeData({
-      activeKey,
-      currentIndex
-    }) {
-      this.setData({
-        activeKey,
-        currentIndex
-      }, () => {
-        if (this.data.scrollable) {
-          this.queryMultipleNodes();
+    _setChangeData({ activeKey, currentIndex }) {
+      this.setData(
+        {
+          activeKey,
+          currentIndex
+        },
+        () => {
+          if (this.data.scrollable) {
+            this.queryMultipleNodes();
+          }
         }
-      });
-      this.triggerEvent('linchange', {
+      );
+      this.triggerEvent("linchange", {
         activeKey,
         currentIndex
       });

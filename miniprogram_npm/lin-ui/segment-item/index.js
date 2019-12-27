@@ -7,11 +7,11 @@ Component({
   },
 
   relations: {
-    '../segment/index': {
-      type: 'parent',
-      linked() { },
-      unlinked() { }
-    },
+    "../segment/index": {
+      type: "parent",
+      linked() {},
+      unlinked() {}
+    }
   },
 
   properties: {
@@ -20,16 +20,16 @@ Component({
     icon: String,
     iconSize: {
       type: String,
-      value: '20'
+      value: "20"
     },
     image: Object,
     picPlacement: {
       type: String,
-      value: 'top'
+      value: "top"
     },
     dotBadge: Boolean,
     badgeCount: {
-      type: Number,
+      type: Number
     },
     badgeMaxCount: {
       type: Number,
@@ -37,11 +37,11 @@ Component({
     },
     badgeCountType: {
       type: String,
-      value: 'overflow'
-    },
+      value: "overflow"
+    }
   },
   observers: {
-    '**': function (filed) {
+    "**": function(filed) {
       this.updateData(filed);
     }
   },
@@ -55,20 +55,22 @@ Component({
    */
   methods: {
     updateData(filed) {
-      let parent = this.getRelationNodes('../segment/index')[0];
+      let parent = this.getRelationNodes("../segment/index")[0];
       if (!parent) return;
       const tabList = parent.data.tabList;
       if (!(tabList && tabList.length > 0)) return;
       const index = tabList.findIndex(tab => tab.key === this.data.key);
       tabList[index] = filed;
-      parent.setData({
-        tabList: tabList
-      }, () => {
-        if (parent.data.scrollable) {
-          parent.queryMultipleNodes();
+      parent.setData(
+        {
+          tabList: tabList
+        },
+        () => {
+          if (parent.data.scrollable) {
+            parent.queryMultipleNodes();
+          }
         }
-      });
-
-    },
+      );
+    }
   }
 });

@@ -1,10 +1,10 @@
-import zIndex from '../behaviors/zIndex';
+import zIndex from "../behaviors/zIndex";
 Component({
   /**
    * 组件的属性列表
    */
   behaviors: [zIndex],
-  externalClasses: ['l-bg-class'],
+  externalClasses: ["l-bg-class"],
   properties: {
     // 显示与隐藏
     show: {
@@ -19,7 +19,7 @@ Component({
     // slot的位置
     contentAlign: {
       type: String,
-      value: 'center'
+      value: "center"
     },
     // 锁定
     locked: {
@@ -35,13 +35,13 @@ Component({
   pageLifetimes: {
     show() {
       this._init();
-    },
+    }
   },
   /**
    * 组件的初始数据
    */
   data: {
-    status: 'show'
+    status: "show"
   },
 
   /**
@@ -50,11 +50,11 @@ Component({
   methods: {
     _init() {
       wx.lin = wx.lin || {};
-      wx.lin.showPopup = (options) => {
+      wx.lin.showPopup = options => {
         const {
           zIndex = 99,
           animation = true,
-          contentAlign = 'center',
+          contentAlign = "center",
           locked = false
         } = { ...options };
         this.setData({
@@ -67,14 +67,14 @@ Component({
       };
       wx.lin.hidePopup = () => {
         this.setData({
-          status: 'hide'
+          status: "hide"
         });
-        setTimeout(()=>{
+        setTimeout(() => {
           this.setData({
             show: false,
-            status: 'show'
+            status: "show"
           });
-        },300);
+        }, 300);
       };
     },
     // 阻止滑动
@@ -90,28 +90,28 @@ Component({
       let detail = true;
       let option = { bubbles: true, composed: true };
       if (this.data.locked !== true) {
-        if(!this.data.show) {
+        if (!this.data.show) {
           this.setData({
             show: true,
-            status: 'show'
+            status: "show"
           });
         } else {
           this.setData({
-            status: 'hide'
+            status: "hide"
           });
-          setTimeout(()=>{
+          setTimeout(() => {
             this.setData({
               show: false,
-              status: 'show'
+              status: "show"
             });
-          },300);
+          }, 300);
         }
         // this.setData({
         //   show: !this.data.show
         // });
       }
 
-      this.triggerEvent('lintap', detail, option);
+      this.triggerEvent("lintap", detail, option);
     }
   }
 });

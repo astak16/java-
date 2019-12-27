@@ -1,13 +1,13 @@
 Component({
-  externalClasses: ['l-class', 'l-select-class', 'l-image-class'],
+  externalClasses: ["l-class", "l-select-class", "l-image-class"],
   properties: {
     // 标签标识
     name: String,
     cell: Object,
     // 标签颜色
-    type:{
+    type: {
       type: String,
-      value: 'touch'
+      value: "touch"
     },
     bgColor: String,
     fontColor: String,
@@ -15,7 +15,7 @@ Component({
     // 标签形状
     shape: {
       type: String,
-      value: 'square'
+      value: "square"
     },
     // 是否为选中态
     select: Boolean,
@@ -24,25 +24,25 @@ Component({
     // 标签大小
     size: {
       type: String,
-      value: 'medium'
+      value: "medium"
     },
     location: {
       type: String,
-      value: 'left'
+      value: "left"
     },
     icon: String,
     iconSize: {
       type: String,
-      value: '20'
+      value: "20"
     },
     iconColor: {
       type: String,
-      value: '#3683D6'
+      value: "#3683D6"
     },
     image: String,
     iconStyle: {
       type: String,
-      value: 'size:20;color:#3683D6'
+      value: "size:20;color:#3683D6"
     },
     height: Number
   },
@@ -54,7 +54,7 @@ Component({
         cell: this.properties.cell,
         select: this.properties.select
       };
-      this.triggerEvent('lintap', options, {
+      this.triggerEvent("lintap", options, {
         bubbles: true,
         composed: true
       });

@@ -1,17 +1,17 @@
 Component({
-  externalClasses: ['l-class'],
+  externalClasses: ["l-class"],
 
   properties: {
     type: {
       type: String,
-      value: 'still'
+      value: "still"
     },
     // 轮播数组
     swipArr: Array,
     // 前置图标
     frontIconName: {
       type: String,
-      value: ''
+      value: ""
     },
     frontIconSize: {
       type: Number,
@@ -19,11 +19,11 @@ Component({
     },
     frontIconColor: {
       type: String,
-      value: '#3683D6'
+      value: "#3683D6"
     },
     endIconName: {
       type: String,
-      value: ''
+      value: ""
     },
     endIconSize: {
       type: Number,
@@ -31,17 +31,17 @@ Component({
     },
     endIconColor: {
       type: String,
-      value: '#3683D6'
+      value: "#3683D6"
     },
     // 背景颜色
     backgroundcolor: {
       type: String,
-      value: '#DFEDFF'
+      value: "#DFEDFF"
     },
     // 字体及图标颜色
     color: {
       type: String,
-      value: '#3683D6'
+      value: "#3683D6"
     },
     // 滚动速度
     speed: {
@@ -63,7 +63,7 @@ Component({
     width: 0,
     duration: 0,
     animation: null,
-    timer: null,
+    timer: null
   },
 
   detached() {
@@ -71,43 +71,57 @@ Component({
   },
 
   ready() {
-    if (this.properties.type == 'roll' && this.properties.show) {
+    if (this.properties.type == "roll" && this.properties.show) {
       this.initAnimation();
     }
   },
 
   methods: {
     initAnimation() {
-      wx.createSelectorQuery().in(this).select('.l-noticebar-content-wrap').boundingClientRect((wrapRect) => {
-        wx.createSelectorQuery().in(this).select('.l-noticebar-content').boundingClientRect((rect) => {
-          const duration = rect.width / 40 * this.data.speed;
-          const animation = wx.createAnimation({
-            duration: duration,
-            timingFunction: 'linear',
-          });
-          this.setData({
-            wrapWidth: wrapRect.width,
-            width: rect.width,
-            duration: duration,
-            animation: animation
-          }, () => {
-            this.startAnimation();
-          });
-        }).exec();
-
-      }).exec();
+      wx.createSelectorQuery()
+        .in(this)
+        .select(".l-noticebar-content-wrap")
+        .boundingClientRect(wrapRect => {
+          wx.createSelectorQuery()
+            .in(this)
+            .select(".l-noticebar-content")
+            .boundingClientRect(rect => {
+              const duration = (rect.width / 40) * this.data.speed;
+              const animation = wx.createAnimation({
+                duration: duration,
+                timingFunction: "linear"
+              });
+              this.setData(
+                {
+                  wrapWidth: wrapRect.width,
+                  width: rect.width,
+                  duration: duration,
+                  animation: animation
+                },
+                () => {
+                  this.startAnimation();
+                }
+              );
+            })
+            .exec();
+        })
+        .exec();
     },
     startAnimation() {
       //reset
       if (this.data.animation.option.transition.duration !== 0) {
         this.data.animation.option.transition.duration = 0;
-        const resetAnimation = this.data.animation.translateX(this.data.wrapWidth).step();
+        const resetAnimation = this.data.animation
+          .translateX(this.data.wrapWidth)
+          .step();
         this.setData({
           animationData: resetAnimation.export()
         });
       }
       this.data.animation.option.transition.duration = this.data.duration;
-      const animationData = this.data.animation.translateX(-this.data.width).step();
+      const animationData = this.data.animation
+        .translateX(-this.data.width)
+        .step();
       setTimeout(() => {
         this.setData({
           animationData: animationData.export()
@@ -117,7 +131,7 @@ Component({
         this.startAnimation();
       }, this.data.duration);
       this.setData({
-        timer,
+        timer
       });
     },
     destroyTimer() {
@@ -126,18 +140,22 @@ Component({
       }
     },
     handleTap() {
-      this.triggerEvent('lintap',{},{ bubbles: true, composed: true });
+      this.triggerEvent("lintap", {}, { bubbles: true, composed: true });
       this.setData({
         timer: null
       });
     },
     onSwip(e) {
-      this.triggerEvent('lintap', {
-        ...e.currentTarget.dataset
-      },{ bubbles: true, composed: true });
+      this.triggerEvent(
+        "lintap",
+        {
+          ...e.currentTarget.dataset
+        },
+        { bubbles: true, composed: true }
+      );
     },
-    onIconTap(){
-      this.triggerEvent('linicontap',{},{ bubbles: true, composed: true });
+    onIconTap() {
+      this.triggerEvent("linicontap", {}, { bubbles: true, composed: true });
       this.setData({
         timer: null
       });
@@ -147,6 +165,6 @@ Component({
         timer: null,
         show: false
       });
-    },
+    }
   }
 });

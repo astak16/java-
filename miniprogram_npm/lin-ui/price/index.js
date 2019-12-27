@@ -2,34 +2,39 @@ Component({
   /**
    * 组件的属性列表
    */
-  externalClasses: ['l-deleted-class', 'l-unit-class', 'l-value-class', 'l-class'],
+  externalClasses: [
+    "l-deleted-class",
+    "l-unit-class",
+    "l-value-class",
+    "l-class"
+  ],
   properties: {
     unit: {
       type: String,
-      value: '￥'
+      value: "￥"
     },
     size: {
       type: String,
-      value: '28'
+      value: "28"
     },
     color: {
       type: String,
-      value: '#3963BC'
+      value: "#3963BC"
     },
     bold: {
       type: String,
-      value: '500'
+      value: "500"
     },
     unitColor: String,
     unitSize: String,
     unitBold: String,
     value: {
       type: String,
-      value: '0.00'
+      value: "0.00"
     },
     mode: {
       type: String,
-      value: 'number'
+      value: "number"
     },
     valueColor: String,
     valueSize: String,
@@ -46,12 +51,10 @@ Component({
   /**
    * 组件的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   observers: {
-    'value': function () {
+    value: function() {
       this.reserveNumber();
     }
   },
@@ -62,7 +65,7 @@ Component({
   methods: {
     reserveNumber() {
       const countToNumber = Number(this.data.value);
-      const isText = isNaN(Number(countToNumber)) || (this.data.mode === 'text');
+      const isText = isNaN(Number(countToNumber)) || this.data.mode === "text";
       if (!isText && this.data.autofix) {
         const result = countToNumber.toFixed(this.data.reserveDigit);
         this.setData({

@@ -1,12 +1,18 @@
-import computeOffset from '../behaviors/computeOffset';
-import zIndex from '../behaviors/zIndex';
-import watchShow from '../behaviors/watchShow';
+import computeOffset from "../behaviors/computeOffset";
+import zIndex from "../behaviors/zIndex";
+import watchShow from "../behaviors/watchShow";
 Component({
   /**
    * 组件的属性列表
    */
   behaviors: [computeOffset, zIndex, watchShow],
-  externalClasses: ['l-bg-class', 'l-icon-class', 'l-class', 'l-image-class', 'l-title-class '],
+  externalClasses: [
+    "l-bg-class",
+    "l-icon-class",
+    "l-class",
+    "l-image-class",
+    "l-title-class "
+  ],
   properties: {
     // 显示与隐藏
     show: {
@@ -24,7 +30,7 @@ Component({
     // 文字的显示方位
     placement: {
       type: String,
-      value: 'bottom'
+      value: "bottom"
     },
     // 提示框显示的时长
     duration: {
@@ -48,7 +54,7 @@ Component({
     },
     openApi: {
       type: Boolean,
-      value: true,
+      value: true
     },
     offsetX: Number,
     offsetY: Number
@@ -59,14 +65,14 @@ Component({
    */
   data: {
     status: false,
-    success: '',
-    fail: '',
-    complete: ''
+    success: "",
+    fail: "",
+    complete: ""
   },
 
   // 解决 addListener undefined 的错误
   observers: {
-    'icon': function () {}
+    icon: function() {}
   },
 
   attached() {
@@ -81,7 +87,7 @@ Component({
         this.initToast();
       }
       this.offsetMargin();
-    },
+    }
   },
 
   /**
@@ -92,10 +98,10 @@ Component({
       wx.lin = wx.lin || {};
       wx.lin.showToast = (options = {}) => {
         const {
-          title = '',
-          icon = '',
-          image = '',
-          placement = 'bottom',
+          title = "",
+          icon = "",
+          image = "",
+          placement = "bottom",
           duration = 1500,
           center = true,
           mask = false,
@@ -103,8 +109,8 @@ Component({
           complete = null,
           offsetX = 0,
           offsetY = 0,
-          iconSize = '60',
-          iconColor = ''
+          iconSize = "60",
+          iconColor = ""
         } = options;
         this.setData({
           title,
@@ -135,7 +141,10 @@ Component({
       var len = 0;
       for (var i = 0; i < str.length; i++) {
         var c = str.charCodeAt(i);
-        if ((c >= '0x0001' && c <= '0x007e') || ('0xff60' <= c && c <= '0xff9f')) {
+        if (
+          (c >= "0x0001" && c <= "0x007e") ||
+          ("0xff60" <= c && c <= "0xff9f")
+        ) {
           len++;
         } else {
           len += 2;
@@ -150,7 +159,6 @@ Component({
 
     // 点击事件
     onMaskTap() {
-
       let detail = true;
       let option = {
         bubbles: true,
@@ -159,12 +167,12 @@ Component({
 
       if (this.data.locked !== true) {
         this.setData({
-          fullScreen: 'hide',
-          status: 'hide',
+          fullScreen: "hide",
+          status: "hide"
         });
       }
 
-      this.triggerEvent('lintap', detail, option);
+      this.triggerEvent("lintap", detail, option);
     }
   }
 });

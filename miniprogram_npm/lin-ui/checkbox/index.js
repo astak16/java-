@@ -1,9 +1,9 @@
 Component({
-  behaviors: ['wx://form-field'],
-  externalClasses: ['l-class', 'l-disabled-class'],
+  behaviors: ["wx://form-field"],
+  externalClasses: ["l-class", "l-disabled-class"],
   relations: {
-    '../checkbox-group/index': {
-      type: 'parent'
+    "../checkbox-group/index": {
+      type: "parent"
     }
   },
   options: {
@@ -13,7 +13,7 @@ Component({
     // checkbox 按钮的位置
     placement: {
       type: String,
-      value: 'left'
+      value: "left"
     },
     //  是否自定义图标内容
     custom: {
@@ -22,7 +22,7 @@ Component({
     },
     key: {
       type: String,
-      value: ''
+      value: ""
     },
     cell: {
       type: Object,
@@ -31,7 +31,7 @@ Component({
     // checkbox的大小
     size: {
       type: String,
-      value: '38rpx'
+      value: "38rpx"
     },
     // 不可选状态
     disabled: {
@@ -41,15 +41,15 @@ Component({
     //  选中后的颜色
     selectColor: {
       type: String,
-      value: '#3963BC'
+      value: "#3963BC"
     },
     disabledColor: {
       type: String,
-      value: '#ccc'
+      value: "#ccc"
     },
     color: {
       type: String,
-      value: '#ccc'
+      value: "#ccc"
     },
     checked: {
       type: Boolean,
@@ -57,12 +57,12 @@ Component({
     }
   },
   data: {
-    parentPlacement: ''
+    parentPlacement: ""
   },
   ready() {
-    const parent = this.getRelationNodes('../checkbox-group/index')[0];
-    let {placement:parentPlacement} = parent.properties;
-    this.setData({parentPlacement});
+    const parent = this.getRelationNodes("../checkbox-group/index")[0];
+    let { placement: parentPlacement } = parent.properties;
+    this.setData({ parentPlacement });
   },
   methods: {
     // 点击checkbox
@@ -71,12 +71,12 @@ Component({
         return;
       }
 
-      const parent = this.getRelationNodes('../checkbox-group/index')[0];
+      const parent = this.getRelationNodes("../checkbox-group/index")[0];
 
-      if(this.properties.checked) {
-        if(this.isOverflow('minSelected')) return;
+      if (this.properties.checked) {
+        if (this.isOverflow("minSelected")) return;
       } else {
-        if(this.isOverflow('maxSelected')) return;
+        if (this.isOverflow("maxSelected")) return;
       }
 
       const item = {
@@ -94,15 +94,23 @@ Component({
      * @param {*} type (max/min)
      */
     isOverflow(type) {
-      const parent = this.getRelationNodes('../checkbox-group/index')[0];
+      const parent = this.getRelationNodes("../checkbox-group/index")[0];
 
       const limit = parent.properties[type];
       if (!limit) return false;
       const selectedLength = parent._selected();
-      let isOverflow = type === 'minSelected' ? selectedLength <= limit : selectedLength >= limit;
+      let isOverflow =
+        type === "minSelected"
+          ? selectedLength <= limit
+          : selectedLength >= limit;
       if (isOverflow) {
-        let backType = type === 'minSelected' ? 'min_selected' : 'max_selected';
-        parent.onEmitOverflowHandle && parent.onEmitOverflowHandle({key: this.properties.key, limitNumber: limit, type: `overflow_${backType}`});
+        let backType = type === "minSelected" ? "min_selected" : "max_selected";
+        parent.onEmitOverflowHandle &&
+          parent.onEmitOverflowHandle({
+            key: this.properties.key,
+            limitNumber: limit,
+            type: `overflow_${backType}`
+          });
       }
       return isOverflow;
     }

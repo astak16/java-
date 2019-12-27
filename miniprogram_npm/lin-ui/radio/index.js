@@ -1,9 +1,9 @@
 Component({
-  externalClasses: ['l-class', 'l-disabled-class'],
-  behaviors: ['wx://form-field'],
+  externalClasses: ["l-class", "l-disabled-class"],
+  behaviors: ["wx://form-field"],
   relations: {
-    '../radio-group/index': {
-      type: 'parent'
+    "../radio-group/index": {
+      type: "parent"
     }
   },
   properties: {
@@ -12,7 +12,7 @@ Component({
     // radio的大小
     size: {
       type: String,
-      value: '38rpx'
+      value: "38rpx"
     },
     disabled: {
       type: Boolean
@@ -20,20 +20,20 @@ Component({
     custom: Boolean,
     color: {
       type: String,
-      value: '#ccc'
+      value: "#ccc"
     },
     //  选中后的颜色
     selectColor: {
       type: String,
-      value: '#3963BC'
+      value: "#3963BC"
     },
     disabledColor: {
       type: String,
-      value: '#ccc'
+      value: "#ccc"
     },
     placement: {
       type: String,
-      value: 'left'
+      value: "left"
     },
     transition: {
       type: Boolean,
@@ -46,7 +46,7 @@ Component({
   methods: {
     setChecked(checked) {
       this.setData({
-        checked,
+        checked
       });
     },
     // 点击radio
@@ -54,7 +54,7 @@ Component({
       if (this.properties.disabled) {
         return;
       }
-      const parent = this.getRelationNodes('../radio-group/index')[0];
+      const parent = this.getRelationNodes("../radio-group/index")[0];
       const noneChecked = parent.properties.noneChecked;
       const isCurrent = this.isCurrentSelectedKey(parent);
       let select = true;

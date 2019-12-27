@@ -3,19 +3,19 @@ Component({
    * 组件的属性列表
    */
   externalClasses: [
-    'l-class',
-    'l-step-class',
-    'l-title-class',
-    'l-describe-class',
-    'l-line-class'
+    "l-class",
+    "l-step-class",
+    "l-title-class",
+    "l-describe-class",
+    "l-line-class"
   ],
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
   },
   relations: {
-    '../steps/index': {
-      type: 'parent'
-    },
+    "../steps/index": {
+      type: "parent"
+    }
   },
   properties: {
     icon: String,
@@ -32,9 +32,7 @@ Component({
   /**
    * 组件的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   /**
    * 组件的方法列表

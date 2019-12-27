@@ -1,24 +1,24 @@
-import zIndex from '../behaviors/zIndex';
-import watchShow from '../behaviors/watchShow';
+import zIndex from "../behaviors/zIndex";
+import watchShow from "../behaviors/watchShow";
 Component({
   behaviors: [zIndex, watchShow],
-  externalClasses: ['l-class', 'l-image-class'],
+  externalClasses: ["l-class", "l-image-class"],
   properties: {
     show: Boolean,
     icon: String,
     iconColor: {
       type: String,
-      value: '#fff'
+      value: "#fff"
     },
     iconSize: {
       type: String,
-      value: '28'
+      value: "28"
     },
     image: String,
     content: String,
     type: {
       type: String,
-      value: 'primary'
+      value: "primary"
     },
     duration: {
       type: Number,
@@ -36,7 +36,7 @@ Component({
 
   // 解决 addListener undefined 的错误
   observers: {
-    'icon': function () {}
+    icon: function() {}
   },
 
   attached() {
@@ -46,7 +46,7 @@ Component({
   pageLifetimes: {
     show() {
       this.initMessage();
-    },
+    }
   },
 
   methods: {
@@ -54,10 +54,10 @@ Component({
       wx.lin = wx.lin || {};
       wx.lin.showMessage = (options = {}) => {
         const {
-          content = '',
-          icon = '',
-          image = '',
-          type = 'primary',
+          content = "",
+          icon = "",
+          image = "",
+          type = "primary",
           duration = 1500,
           success = null
         } = options;
@@ -72,7 +72,7 @@ Component({
         this.changeStatus();
         return this;
       };
-      wx.lin.hideMessage = ()=>{
+      wx.lin.hideMessage = () => {
         this.setData({
           status: false
         });

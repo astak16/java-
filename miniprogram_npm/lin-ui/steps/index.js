@@ -1,26 +1,24 @@
 Component({
-  externalClasses: [
-    'l-class'
-  ],
+  externalClasses: ["l-class"],
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
   },
   relations: {
-    '../step/index': {
-      type: 'child',
+    "../step/index": {
+      type: "child",
       linked() {
         this._initSteps();
       },
       unlinked() {
         this._initSteps();
       }
-    },
+    }
   },
 
   properties: {
     direction: {
       type: String,
-      value: 'row'
+      value: "row"
     },
     activeIndex: {
       type: Number,
@@ -29,18 +27,18 @@ Component({
     color: String,
     stepMinHeight: {
       type: String,
-      value: '120'
+      value: "120"
     },
     status: {
       type: String,
-      value: 'process'
+      value: "process"
     },
     dot: Boolean,
     reverse: Boolean
   },
 
   observers: {
-    'activeIndex': function () {
+    activeIndex: function() {
       this._initSteps();
     }
   },
@@ -48,9 +46,7 @@ Component({
   /**
    * 组件的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   /**
    * 组件的方法列表
@@ -58,19 +54,22 @@ Component({
   methods: {
     _initSteps() {
       const query = wx.createSelectorQuery().in(this);
-      query.select('.steps-container').boundingClientRect().exec(res => {
-        let steps = this.getRelationNodes('../step/index');
-        this.data.length = steps.length;
-        if (this.data.length > 0) {
-          steps.forEach((step, index) => {
-            step.updateDataChange({
-              index,
-              ...this.data,
-              stepsWidth: res[0].width
+      query
+        .select(".steps-container")
+        .boundingClientRect()
+        .exec(res => {
+          let steps = this.getRelationNodes("../step/index");
+          this.data.length = steps.length;
+          if (this.data.length > 0) {
+            steps.forEach((step, index) => {
+              step.updateDataChange({
+                index,
+                ...this.data,
+                stepsWidth: res[0].width
+              });
             });
-          });
-        }
-      });
+          }
+        });
     }
   }
 });
