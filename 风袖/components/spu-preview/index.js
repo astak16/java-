@@ -1,6 +1,3 @@
-// components/spu-preview/index.js
-import array from "../../miniprogram_npm/lin-ui/common/async-validator/validator/array";
-
 Component({
   /**
    * 组件的属性列表
@@ -35,6 +32,13 @@ Component({
       this.setData({
         w: 340,
         h: 340 * height / width
+      })
+    },
+    onItemTap(event) {
+      const {pid} = event.currentTarget.dataset
+      
+      wx.navigateTo({
+        url: `/pages/detail/detail?pid=${pid}`
       })
     }
   }
