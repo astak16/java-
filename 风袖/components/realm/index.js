@@ -8,11 +8,12 @@ Component({
   properties: {
     spu: Object
   },
-  observers:{
-    'spu'(spu){
-      if(!spu) return
+  observers: {
+    'spu'(spu) {
+      if (!spu) return
       const fenceGroup = new FenceGroup(spu)
       fenceGroup.initFences()
+      this.bindInitData(fenceGroup)
     }
   },
   /**
@@ -23,5 +24,12 @@ Component({
   /**
    * 组件的方法列表
    */
-  methods: {}
+  methods: {
+    bindInitData(fenceGroup) {
+      this.setData({
+        fences: fenceGroup.fences
+      })
+      console.log(fenceGroup.fences)
+    }
+  }
 })

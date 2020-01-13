@@ -1,10 +1,15 @@
-// components/fence/index.js
+// components/cell/index.js
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-    fence: Object
+    cell: Object
+  },
+  observers:{
+    'cell'(value){
+      console.log(value)
+    }
   },
   
   /**
