@@ -9,8 +9,8 @@ class FenceGroup {
   constructor(spu) {
     this.spu = spu
     this.skuList = spu.sku_list
-    
   }
+  
   initFences() {
     const matrix = this._createMatrix(this.skuList)
     const fences = []
@@ -21,8 +21,6 @@ class FenceGroup {
       fences.push(fence)
     })
     this.fences = fences
-    console.log(fences)
-  
   }
   
   _createMatrix(skuList) {

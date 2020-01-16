@@ -1,4 +1,4 @@
-import { HTTP } from "../utils/http";
+import {HTTP} from "../utils/http";
 
 class Category {
   static async getHomeLocationC() {
@@ -8,4 +8,4 @@ class Category {
   }
 }
 
-export { Category };
+export {Category};

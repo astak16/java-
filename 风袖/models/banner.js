@@ -1,14 +1,15 @@
-import { HTTP } from "../utils/http";
+import {HTTP} from "../utils/http";
 
 class Banner {
   static locationB = "b-1";
   static locationG = "b-2";
-
+  
   static async getHomeLocationB() {
     return await HTTP.request({
       url: `banner/name/${Banner.locationB}`
     });
   }
+  
   static async getHomeLocationG() {
     return await HTTP.request({
       url: `banner/name/${Banner.locationG}`
@@ -16,4 +17,4 @@ class Banner {
   }
 }
 
-export { Banner };
+export {Banner};
