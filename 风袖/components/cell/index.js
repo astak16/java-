@@ -9,7 +9,6 @@ Component({
   },
   observers: {
     'cell'(value) {
-      console.log(value)
     }
   },
   
@@ -23,7 +22,6 @@ Component({
    */
   methods: {
     onTap(event) {
-      console.log(this.properties)
       this.triggerEvent('celltap', {
         cell: this.properties.cell,
         x: this.properties.x,

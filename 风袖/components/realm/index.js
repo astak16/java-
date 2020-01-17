@@ -34,10 +34,8 @@ Component({
       this.setData({
         fences: fenceGroup.fences
       })
-      console.log(fenceGroup.fences)
     },
     onCellTap(event) {
-      console.log(event)
       const {cell, x, y} = event.detail
       const judger = this.data.judger
       judger.judge(cell, x, y)
