@@ -12,7 +12,7 @@
                    color="#157658" value-size="28" autofix
           ></l-price>
           <l-price wx:if="{{p.slashedPrice(price,discountPrice).display}}"
-              value="{{p.slashedPrice(price,discountPrice).price}}"
+                   value="{{p.slashedPrice(price,discountPrice).price}}"
                    color="#999" value-size="26" l-class="discount-price" deleted
           ></l-price>
           <view class="stock" wx:if="{{stock && stock >= 10}}">库存：{{stock}}件</view>
@@ -32,6 +32,14 @@
     <s-fence x="{{index}}" fence="{{item}}" bind:celltap="onCellTap"></s-fence>
   </block>
   <view class="counter-container">
-    <!--<l-counter></l-counter>-->
+    <text>购买数量</text>
+    <s-counter bind:lintap="onSelectCount"></s-counter>
   </view>
+</view>
+
+<view class="bottom-btn" wx:if="{{!outStock}}">
+  <text>加入购物车</text>
+</view>
+<view class="bottom-btn out-stock" wx:else>
+  <text>暂时缺货</text>
 </view>
