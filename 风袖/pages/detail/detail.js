@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    spu: null
+    spu: null,
+    showRealm: false
   },
   
   /**
@@ -17,6 +18,18 @@ Page({
     const {pid} = options
     const spu = await Spu.getDetail(pid)
     this.setData({spu})
+  },
+  
+  onAddToCart(event){
+    console.log(1)
+    this.setData({
+      showRealm: true
+    })
+  },
+  onBuy(event){
+    this.setData({
+      showRealm: true
+    })
   },
   
   /**
