@@ -40,7 +40,8 @@
 </scroll-view>
 
 <view class="bottom-btn" wx:if="{{!outStock}}">
-  <text>加入购物车</text>
+  <text wx:if="{{orderWay === 'cart'}}">加入购物车</text>
+  <text wx:else>立即购买</text>
 </view>
 <view class="bottom-btn out-stock" wx:else>
   <text>暂时缺货</text>
